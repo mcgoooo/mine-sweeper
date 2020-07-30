@@ -15,10 +15,10 @@
   "dependencies": {
     "cf-style-container": "^6.0.1",
     "cf-style-nextjs": "^1.0.0",
-    "next": "^4.2.3",
+    "next": "^9.5.1",
     "prettier": "^1.8.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "uglifyjs-webpack-plugin": "^1.1.8"
   },
   "devDependencies": {
