@@ -1,13 +1,17 @@
 import Layout from '../components/layout';
-
 // game components
 import Desk from '../components/desk';
 import Square from '../components/square';
 import Mine from '../components/mine';
 import Flag from '../components/flag';
+import Head from 'next/head'
 
 const Index = () => (
+
   <Layout title={`Minesweeper (active)`}>
+    <Head>
+      <title>Minesweeper</title>
+    </Head>
     <Desk boardSize={10}>
       {[...Array(100).keys()].map(i => (
         <Square key={i} disabled={i === 55 || i === 10}>
