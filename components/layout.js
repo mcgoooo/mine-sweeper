@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import { StyleProvider } from 'cf-style-nextjs';
 import { createComponent } from 'cf-style-container';
