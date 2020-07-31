@@ -9,7 +9,6 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <meta charSet="utf-8" />
-
           <style
             dangerouslySetInnerHTML={{
               __html: `
