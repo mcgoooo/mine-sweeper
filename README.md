@@ -1,7 +1,7 @@
 # Minesweeper
 
 ## notes
- please check pull requests for work done onthe challenge
+ please check pull requests for work done on the challenge
  
 ## Installation
 
