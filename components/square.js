@@ -1,12 +1,12 @@
 import { createComponent } from 'cf-style-container';
 
 const Square = createComponent(
-  ({ disabled }) => ({
+  ({ uncovered }) => ({
     width: 40,
     height: 40,
     padding: 10,
-    cursor: disabled ? 'initial' : 'pointer',
-    backgroundColor: disabled ? '#CCC' : '#FFF',
+    cursor: 'pointer',
+    backgroundColor: uncovered ? '#CCC' : '#FFF',
     border: `1px solid black`,
     lineHeight: 1,
     textAlign: 'center',

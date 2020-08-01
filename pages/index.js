@@ -1,25 +1,37 @@
+import { useState } from 'react';
 import Layout from '../components/layout';
-// game components
 import Desk from '../components/desk';
 import Square from '../components/square';
 import Mine from '../components/mine';
 import Flag from '../components/flag';
 import Generator from '../models/board/generator'
+import { leftClickHandler } from '../models/board/interactionHandler'
 
-const Index = ({board, width}) => (
-  <Layout title={`Minesweeper (active)`}>
+
+const Index = ({board, width}) => {
+  const [statefulBoard, handleClick] = useState(board);
+
+  return (<Layout title={`Minesweeper (active)`}>
     <Desk boardSize={width}>
-    {board.map((row, x) => (
-      row.map((square, i)=> (
-        <Square key={`${x}-${i}`} type={square.type}>
+    {statefulBoard.map((row, rowIndex) => (
+      row.map((square, squareIndex)=> {
+        return (
+        <Square
+          key={`${rowIndex}-${squareIndex}`}
+          type={square.type}
+          uncovered={square.uncovered}
+          onClick={(e) => {
+            handleClick(leftClickHandler({ statefulBoard, rowIndex, squareIndex}))
+          }}
+        >
           {square.type == 'bomb' && <Mine />}
           {square.type == 'bombNearby' && square.nearbyBombs}
         </Square>
-      ))
+      )})
     ))}
     </Desk>
-  </Layout>
-);
+  </Layout>)
+};
 
 export function getStaticProps() {
   const width = 10
