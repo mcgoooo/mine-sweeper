@@ -3,6 +3,12 @@ const bombType = {
   markedAsBomb: false
 }
 
+const emptySquareType = {
+  type: "emptySquare",
+  markedAsBomb: false
+}
+
+
 export default class BoardGenerator {
   constructor(height, width, bombCount) {
     this.height = height
@@ -12,7 +18,7 @@ export default class BoardGenerator {
   }
 
   generateEmptyBoard() {
-    const generateRow = () => new Array(this.width).fill(null)
+    const generateRow = () => new Array(this.width).fill(null).map(()=>({...emptySquareType}))
     const rows = new Array(this.height).fill(null).map(generateRow)
     return rows
   }
@@ -31,7 +37,6 @@ export default class BoardGenerator {
     }
 
     bombLocations.forEach ((location) => board[location.row][location.column] = {...bombType})
-
     return board
   }
 
