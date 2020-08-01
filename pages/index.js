@@ -9,9 +9,6 @@ import Head from 'next/head'
 const Index = () => (
 
   <Layout title={`Minesweeper (active)`}>
-    <Head>
-      <title>Minesweeper</title>
-    </Head>
     <Desk boardSize={10}>
       {[...Array(100).keys()].map(i => (
         <Square key={i} disabled={i === 55 || i === 10}>
