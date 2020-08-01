@@ -1,5 +1,8 @@
 # Minesweeper
 
+## notes
+ please check pull requests for work done onthe challenge
+ 
 ## Installation
 
 It assumes you have the latest node and yarn installed.
