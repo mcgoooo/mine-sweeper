@@ -11,8 +11,9 @@ const Index = ({board, width}) => (
     <Desk boardSize={width}>
     {board.map((row, x) => (
       row.map((square, i)=> (
-        <Square key={`${x}-${i}`}>
+        <Square key={`${x}-${i}`} type={square.type}>
           {square.type == 'bomb' && <Mine />}
+          {square.type == 'bombNearby' && square.nearbyBombs}
         </Square>
       ))
     ))}
