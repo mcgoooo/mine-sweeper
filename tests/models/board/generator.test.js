@@ -18,6 +18,25 @@ describe('BoardGenerator', () => {
     expect(generated.board.flat().filter((row)=>row.type == "bomb").length).toBe(900)
   })
 
+  it('generates a board with bombNearbyType', () => {
+    const generated = new BoardGenerator(2, 2, 3)
+    const bombNearbySquare = generated.board.flat().filter((row)=>row.type == "bombNearby")
+    expect(bombNearbySquare.length).toBe(1)
+    expect(bombNearbySquare[0].nearbyBombs).toBe(3)
+  })
+
+  // again the inherent nature of Math.random here makes this harder to test
+  it('generates a board with bombNearbyType and emptySquares', () => {
+    const generated = new BoardGenerator(40, 2, 3)
+    const bombNearbySquare = generated.board.flat().filter((row)=>row.type == "bombNearby")
+    const emptySquare = generated.board.flat().filter((row)=>row.type == "emptySquare")
+    const bombs = generated.board.flat().filter((row)=>row.type == "bomb")
+
+    expect(bombNearbySquare.length > 1).toBe(true)
+    expect(emptySquare.length > 1).toBe(true)
+    expect(bombs.length).toBe(3)
+  })
+
 
   // TODO left out to keep code concise, code test etc
   // possibility to use typescript to alleviate some invalid input
