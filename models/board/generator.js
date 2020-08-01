@@ -5,13 +5,15 @@ const bombType = {
 
 const emptySquareType = {
   type: "emptySquare",
-  markedAsBomb: false
+  markedAsBomb: false,
+  uncovered: false
 }
 
 const bombNearbyType = {
   type: "bombNearby",
   markedAsBomb: false,
-  nearbyBombs: 0
+  nearbyBombs: 0,
+  uncovered: false
 }
 
 export default class BoardGenerator {
@@ -61,13 +63,14 @@ export default class BoardGenerator {
         row.map((square, squareIndex)=> {
           if (square?.type === 'bomb') return square
 
-          const nearbyBombs = positionsToCheck.reduce((nearbyBombs, [rowOffset, squareOffset]) => {
+          const reducer = (nearbyBombs, [rowOffset, squareOffset]) => {
             const nearbySquare = board?.[RowIndex + rowOffset]?.[squareIndex + squareOffset]
             if (!nearbySquare) return nearbyBombs;
 
             return (nearbySquare.type === 'bomb') ? nearbyBombs + 1 : nearbyBombs
-          }, 0)
+          }
 
+          const nearbyBombs = positionsToCheck.reduce(reducer, 0)
           return (nearbyBombs !== 0) ? { ...bombNearbyType, nearbyBombs} : {...emptySquareType}
         })
       ))
