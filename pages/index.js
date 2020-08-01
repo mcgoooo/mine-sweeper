@@ -4,21 +4,34 @@ import Desk from '../components/desk';
 import Square from '../components/square';
 import Mine from '../components/mine';
 import Flag from '../components/flag';
-import Head from 'next/head'
+import Generator from '../models/board/generator'
 
-const Index = () => (
-
+const Index = ({board, width}) => (
   <Layout title={`Minesweeper (active)`}>
-    <Desk boardSize={10}>
-      {[...Array(100).keys()].map(i => (
-        <Square key={i} disabled={i === 55 || i === 10}>
-          {i === 10 && <Mine />}
-          {i === 25 && <Flag />}
-          {i === 77 ? '4' : ''}
+    <Desk boardSize={width}>
+    {board.map((row, x) => (
+      row.map((square, i)=> (
+        <Square key={`${x}-${i}`}>
+          {square.type == 'bomb' && <Mine />}
         </Square>
-      ))}
+      ))
+    ))}
     </Desk>
   </Layout>
 );
+
+export function getStaticProps() {
+  const width = 10
+  const height = 10
+  const bombs = 10
+  const board = (new Generator(width,height,bombs)).board
+  return {
+    props: {
+      board,
+      width
+    }
+  }
+}
+
 
 export default Index;
