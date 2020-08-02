@@ -1,12 +1,5 @@
 import Head from 'next/head';
-import { StyleProvider } from 'cf-style-nextjs';
-import { createComponent } from 'cf-style-container';
 import { Fragment } from 'react'
-
-const Center = createComponent(({ theme }) => ({
-  margin: '0px auto',
-  margin: theme.space[4]
-}));
 
 export default ({ children, title = 'Minesweeper' }) => (
   <Fragment>
@@ -19,11 +12,8 @@ export default ({ children, title = 'Minesweeper' }) => (
       <title>{title}</title>
     </Head>
     </Head>
-    <StyleProvider>
-      <Center>
-          <h1>{title}</h1>
-          {children}
-      </Center>
-    </StyleProvider>
+      <Fragment>
+        {children}
+      </Fragment>
   </Fragment>
 );

@@ -1,11 +1,12 @@
-import { createComponent } from 'cf-style-container';
 
-const Desk = createComponent(({ boardSize }) => ({
-  width: 40 * boardSize + 2,
-  height: 40 * boardSize + 2,
-  border: `1px solid black`,
-  display: 'flex',
-  flexWrap: 'wrap'
-}));
+import styled from '@emotion/styled'
 
+const Desk = styled.div`
+  width: ${props => 40 * props.boardSize + 16 }px;
+  height: ${props => 40 * props.boardSize + 16 }px;
+  border: 8px solid rgb(123, 127, 131);
+  display: flex;
+  flex-wrap: wrap;
+
+`
 export default Desk;
