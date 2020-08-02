@@ -1,6 +1,5 @@
 import TestRenderer from 'react-test-renderer'
 import Head from 'next/head'
-import { StyleProvider } from 'cf-style-nextjs'
 import React from 'react'
 import Layout from '../../components/layout'
 // TODO
@@ -14,7 +13,4 @@ describe('index', () => {
     expect(root.findByType(Head)).not.toBeNull()
   })
 
-  it('renders a style provider', () => {
-    expect(root.findByType(StyleProvider)).not.toBeNull()
-  })
 })

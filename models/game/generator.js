@@ -58,7 +58,7 @@ export const fillInSquares = (board) => {
         }
 
         const nearbyBombs = positionsToCheck.reduce(reducer, 0)
-        return (nearbyBombs !== 0) ? { ...bombNearbyType, nearbyBombs} : {...emptySquareType}
+        return (nearbyBombs === 0) ? {...emptySquareType} : { ...bombNearbyType, nearbyBombs}
       })
     ))
   return filledIn

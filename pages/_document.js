@@ -1,9 +1,6 @@
 import Document, { Head, Main, NextScript } from 'next/document';
-import { getInitialProps, getStyles } from 'cf-style-nextjs';
 
 export default class MyDocument extends Document {
-  static getInitialProps = getInitialProps();
-
   render() {
     return (
       <html>
@@ -14,11 +11,13 @@ export default class MyDocument extends Document {
               __html: `
                 *{ box-sizing: border-box; }
                 body { margin: 0; }
-                html { font-family: 'Open Sans', sans-serif; }
+                html {
+                  font-family: 'Open Sans', sans-serif;
+                  background-color: rgb(60, 170, 170);
+                }
                `
             }}
           />
-          {getStyles(this.props)}
           <link
             href="https://fonts.googleapis.com/css?family=Open+Sans"
             rel="stylesheet"

@@ -11,7 +11,7 @@ describe('BoardGenerator', () => {
 
   // doesn't quite test that, but good enough for a code test, in the real world
   // you would probably mock random or floor to fully test
-  it('generates and will never duplcicate', () => {
+  it('generates and will never duplcicate position', () => {
     const generated = new GameGenerator(30, 30, 900)
     expect(generated.board.length).toBe(30)
     expect(generated.board[0].length).toBe(30)
@@ -47,7 +47,7 @@ describe('BoardGenerator', () => {
     })
 
     describe('threeByThree mock',()=>{
-      it('correctly identifies nearby squares mand qty', ()=> {
+      it('correctly identifies nearby squares and qty', ()=> {
         const game = threeByThree({ shouldFillInSquares: false }).game
         const result = fillInSquares(game.board)
         const exepctedNearbyQuantity = [

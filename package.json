@@ -10,12 +10,12 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "dependencies": {
     "@babel/preset-env": "^7.11.0",
-    "@cloudflare/style-container": "^7.2.16",
-    "cf-style-nextjs": "^1.0.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "lodash.clonedeep": "^4.5.0",
     "next": "^9.5.1",
     "prettier": "^1.8.2",
