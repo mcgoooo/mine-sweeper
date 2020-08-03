@@ -1,5 +1,4 @@
-
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
 const RedDisplay = styled.p`
   height: auto;
@@ -11,6 +10,6 @@ const RedDisplay = styled.p`
   font-size: 30px;
   line-height: 1;
   margin: 10px;
-`
+`;
 
 export default RedDisplay;
