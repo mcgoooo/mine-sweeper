@@ -36,6 +36,15 @@ const nonBlockingWallBoard = [
   [bm(),null,null,null,bm(),null,null],
 ]
 
+
+const rectangularBoard = [
+  [bm(),null,null],
+  [bm(),null,null],
+  [bm(),null,null],
+  [bm(),null,null],
+]
+
+
 const generate = (originalBoard, shouldFillInSquares = true) => {
   const board = shouldFillInSquares ?
     fillInSquares(cloneDeep(originalBoard)): cloneDeep(originalBoard)
@@ -81,3 +90,5 @@ export const nonBlockingWall = (fillsquares) =>
 export const surroundedByBombs = (fillsquares) =>
   generate(surrondedByBombsBoard, fillsquares)
 
+  export const rectangular = (fillsquares) =>
+  generate(rectangularBoard, fillsquares)

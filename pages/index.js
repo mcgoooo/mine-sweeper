@@ -56,7 +56,7 @@ export async function getServerSideProps({query}) {
   const width = parseInt(query.width) || 10
   const height =  parseInt(query.height) || 10
   const bombCount = parseInt(query.bombs) || 10
-  const board = (new Generator(width,height,bombCount)).board
+  const board = (new Generator({width,height,bombCount})).board
   return {
     props: {
       board,
