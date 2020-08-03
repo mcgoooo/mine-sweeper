@@ -4,9 +4,21 @@ const Attirbution = styled.div`
   padding: 20px;
   color: white;
   font-size: 24px;
-  float: right;
   text-align: right;
   overflow: hidden;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: rgb(60, 170, 170);
+  border-color: rgba(60, 170, 170,0);
+  border-width: 0 0 6px 6px;
+  border-style: solid;
+  transition: border-color 0.3s;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  &:hover {
+    z-index: 9999;
+    border-color: rgba(70, 190, 190,1);
+  }
   a {
     color: white;
     display: block;
@@ -14,7 +26,7 @@ const Attirbution = styled.div`
     display: block;
     text-align: right;
     &:hover {
-      background: rgba(255, 255, 255, 0.2)
+      background: rgba(70, 190, 190,1);
     }
   }
   a:first-of-type {
@@ -52,7 +64,7 @@ export default class MyDocument extends Document {
         <body>
           <Attirbution>
             Minesweeper 95 made by Mcgooo
-            <a href="https://github.com/mcgoooo/mine-sweeper" target="_blank">minesweeper 95 source code</a>
+            <a href="https://github.com/mcgoooo/mine-sweeper" target="_blank">source code</a>
             <a href="https://github.com/mcgoooo" target="_blank">Github</a>
             <a href="https://linkedin.com/in/mcgoooo" target="_blank">linked in</a>
             <a href="https://instagram.com/mcgoooo" target="_blank">instagram</a>
