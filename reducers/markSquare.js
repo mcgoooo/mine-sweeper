@@ -7,7 +7,10 @@ const markSquare =({ game: originalGame, rowIndex, squareIndex}) => {
 
   if (clickedSquare.markedAsBomb) {
     clickedSquare.markedAsBomb = false
-    return game
+    return {
+      ...game,
+      marksLeft: allMarked.length + 1
+    }
   }
 
   if (clickedSquare.uncovered) return game
@@ -19,15 +22,23 @@ const markSquare =({ game: originalGame, rowIndex, squareIndex}) => {
     square.markedAsBomb == true &&
     square.type == 'bomb'
   )
+
   const uncoveredNonBombs = game.board.flat().filter((square)=>
     square.type != 'bomb' && square.uncovered == true
   )
 
 
   if (game.bombCount == allMarkedBombs.length) {
-    return {...game, status: "won"}
+    return {
+      ...game,
+      status: "won",
+      marksLeft: 0
+    }
   }
-  return game
+  return {
+    ...game,
+    marksLeft: game.bombCount - game.board.flat().filter((square)=> square.markedAsBomb == true).length
+  }
 }
 
 export default markSquare

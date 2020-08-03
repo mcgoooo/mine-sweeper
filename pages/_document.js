@@ -12,7 +12,8 @@ export default class MyDocument extends Document {
                 *{ box-sizing: border-box; }
                 body { margin: 0; }
                 html {
-                  font-family: 'Open Sans', sans-serif;
+                  padding-left:100px;
+                  font-family: 'Microsoft Sans Serif', 'Open Sans', sans-serif;
                   background-color: rgb(60, 170, 170);
                 }
                `
@@ -22,6 +23,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Open+Sans"
             rel="stylesheet"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Courier+Prime"
+            rel="stylesheet">
+          </link>
         </Head>
         <body>
           <Main />

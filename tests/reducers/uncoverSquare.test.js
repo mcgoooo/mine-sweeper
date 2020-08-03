@@ -13,8 +13,12 @@ describe('uncoverSquare', () => {
     const bombLocation = mock.locations.bomb[0]
 
     const result = uncoverSquare({ game, ...bombLocation })
+    const flatttenedRows = result.board.flat()
+    const uncovered = flatttenedRows.filter((square)=> square.uncovered)
+
     expect(result.status).toBe('lost')
     expect(game).not.toBe(result)
+    expect(uncovered.length).toBe(1)
   })
 
   it('does nothing if it is marked as a bomb', () => {
