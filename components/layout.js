@@ -1,19 +1,30 @@
 import Head from 'next/head';
 import { Fragment } from 'react'
+import styled from '@emotion/styled'
+import GameContainer from '../components/gameContainer';
+import AppContainer from '../components/appContainer';
+import TitleBar from './titleBar';
 
-export default ({ children, title = 'Minesweeper' }) => (
+
+const Section = styled.section`
+  background-color: rgb(187, 192, 196);
+`
+ const Layout = ({ children, title = 'Minesweeper' }) => (
   <Fragment>
     <Head>
       <meta
         name="viewport"
         content="initial-scale=1.0, width=device-width"
       />
-      <Head>
       <title>{title}</title>
     </Head>
-    </Head>
-      <Fragment>
-        {children}
-      </Fragment>
+      <AppContainer>
+        <TitleBar></TitleBar>
+        <GameContainer>
+          {children}
+        </GameContainer>
+      </AppContainer>
   </Fragment>
 );
+
+export default Layout

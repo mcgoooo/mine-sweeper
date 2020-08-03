@@ -1,20 +1,28 @@
 import { useState } from 'react';
 import Layout from '../components/layout';
 import Desk from '../components/desk';
+import InfoBar from '../components/infoBar';
 import Square from '../components/square';
 import SquareContents from '../components/squareContents';
+
 import Generator from '../models/game/generator'
 import leftClickHandler from '../reducers/uncoverSquare'
 import rightClickHandler from '../reducers/markSquare'
 
 const Index = ({board, width, bombCount}) => {
-  const [game, handleClick] = useState({board, status: "started", bombCount});
+  const [game, handleClick] = useState({
+    board,
+    status: "started",
+    bombCount,
+    marksLeft: bombCount
+  });
   const gameFinished = game.status == "lost" || game.status == "won"
 
   return (
-    <Layout title={`Minesweeper (active)`} status={game.status}>
-      {gameFinished && `${game.status}`}
-      <Desk boardSize={width}>
+    <Layout title={`Minesweeper (active)`}>
+      <InfoBar marksLeft={game.marksLeft}  status={game.status}>
+      </InfoBar>
+      <Desk boardSize={width} status={game.status}>
       {game.board.map((row, rowIndex) => (
           row.map((square, squareIndex)=> {
             return (

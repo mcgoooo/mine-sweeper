@@ -13,6 +13,7 @@ describe('MarkSquare', () => {
     const markedAsBombQty = gameResult.board.flat().filter((s)=> s.markedAsBomb).length
 
     expect(squareResult.markedAsBomb).toBe(true)
+    expect(gameResult.marksLeft).toBe(1)
     expect(markedAsBombQty).toBe(1)
     expect(game).not.toBe(gameResult)
     expect(game.result).not.toBeDefined()
@@ -30,6 +31,7 @@ describe('MarkSquare', () => {
 
     expect(squareResult.markedAsBomb).toBe(false)
     expect(markedAsBombQty).toBe(0)
+    expect(gameResult.marksLeft).toBe(2)
     expect(game).not.toBe(gameResult)
     expect(game.status).toBe('started')
   })
@@ -66,7 +68,7 @@ describe('MarkSquare', () => {
     const mock = threeByThree()
     let game = mock.game
     mock.locations.bomb.forEach((location)=> game = markSquare({ game, ...location }))
-
+    expect(game.marksLeft).toBe(0)
     expect(game.status).toBe('won')
   })
 })

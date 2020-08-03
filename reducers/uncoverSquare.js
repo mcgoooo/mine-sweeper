@@ -9,15 +9,18 @@ export default ({ game: originalGame, rowIndex, squareIndex}) => {
   const isEmpty = clickedSquare.type === 'emptySquare'
 
   if (isMarkedAsBomb) return game
-  if (isBomb) return handleBomb(game)
+  if (isBomb) return handleBomb({ game, rowIndex, squareIndex})
   if (bombNearby) return handleBombNearby({ game, rowIndex, squareIndex})
   if (isEmpty) return handleEmptySquare({ game, rowIndex, squareIndex})
 }
 
-const handleBomb = (game) => ({
-  ...game,
-  status: 'lost'
-})
+const handleBomb = ({ game, rowIndex, squareIndex}) => {
+  game.board[rowIndex][squareIndex].uncovered = true
+  return {
+    ...game,
+    status: 'lost'
+  }
+}
 
 const handleBombNearby = ({ game, rowIndex, squareIndex }) => {
   game.board[rowIndex][squareIndex].uncovered = true
