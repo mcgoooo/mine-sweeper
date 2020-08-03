@@ -1,6 +1,6 @@
 {
   "name": "minesweeper",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Minesweeper",
   "main": "index.js",
   "author": "tajo <vojtech@miksu.cz>",
@@ -18,7 +18,7 @@
     "@emotion/styled": "^10.0.27",
     "lodash.clonedeep": "^4.5.0",
     "next": "^9.5.1",
-    "prettier": "^1.8.2",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "uglifyjs-webpack-plugin": "^1.1.8"
