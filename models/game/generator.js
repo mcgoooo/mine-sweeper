@@ -1,5 +1,5 @@
 export default class BoardGenerator {
-  constructor(height, width, bombCount) {
+  constructor({height, width, bombCount}) {
     this.height = height
     this.width = width
     this.bombCount = bombCount

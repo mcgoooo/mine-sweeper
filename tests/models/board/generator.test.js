@@ -1,9 +1,9 @@
 import GameGenerator, { fillInSquares } from '../../../models/game/generator'
-import { surroundedByBombs, threeByThree } from '../../mocks/game'
+import { surroundedByBombs, threeByThree, rectangular } from '../../mocks/game'
 
 describe('BoardGenerator', () => {
   it('generates a board correctly', () => {
-    const generated = new GameGenerator(4, 2, 5)
+    const generated = new GameGenerator({height: 4, width: 2, bombCount: 5})
     expect(generated.board.length).toBe(4)
     expect(generated.board[0].length).toBe(2)
     expect(generated.board.flat().filter((row)=>row.type == "bomb").length).toBe(5)
@@ -12,7 +12,7 @@ describe('BoardGenerator', () => {
   // doesn't quite test that, but good enough for a code test, in the real world
   // you would probably mock random or floor to fully test
   it('generates and will never duplcicate position', () => {
-    const generated = new GameGenerator(30, 30, 900)
+    const generated = new GameGenerator({height: 30, width: 30, bombCount: 900})
     expect(generated.board.length).toBe(30)
     expect(generated.board[0].length).toBe(30)
     expect(generated.board.flat().length).toBe(900)
@@ -20,7 +20,7 @@ describe('BoardGenerator', () => {
   })
 
   it('generates a board with bombNearbyType', () => {
-    const generated = new GameGenerator(2, 2, 3)
+    const generated = new GameGenerator({height: 2, width: 2, bombCount: 3})
     const bombNearbySquare = generated.board.flat().filter((row)=>row.type == "bombNearby")
     expect(bombNearbySquare.length).toBe(1)
     expect(bombNearbySquare[0].nearbyBombs).toBe(3)
@@ -28,7 +28,7 @@ describe('BoardGenerator', () => {
 
   // again the inherent nature of Math.random here makes this harder to test
   it('generates a board with bombNearbyType and emptySquares', () => {
-    const generated = new GameGenerator(40, 2, 3)
+    const generated = new GameGenerator({height: 40, width: 2, bombCount: 3})
     const bombNearbySquare = generated.board.flat().filter((row)=>row.type == "bombNearby")
     const emptySquare = generated.board.flat().filter((row)=>row.type == "emptySquare")
     const bombs = generated.board.flat().filter((row)=>row.type == "bomb")
@@ -82,6 +82,17 @@ describe('BoardGenerator', () => {
           })
         })
       })
+    })
+    describe('rectangular mock',()=>{
+      it('correctly identifies nearby squares and qty', ()=> {
+        const game = rectangular({ shouldFillInSquares: false }).game
+        const result = fillInSquares(game.board)
+        const rowCount = result.length
+        const rowSquareCount = result[0].length
+        expect(rowCount).toBe(4)
+        expect(rowSquareCount).toBe(3)
+      })
+
     })
   })
 
