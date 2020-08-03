@@ -9,7 +9,7 @@ const Timer = styled(RedDisplay)`
   margin-right: 10px;
 `
 const Container = styled.div`
-    width: 416px;
+    width: ${(props) => props.width*40 + 16}px;
     background-color: rgb(187, 192, 196);
     border-style: solid;
     border-width: 6px;
