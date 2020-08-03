@@ -12,6 +12,15 @@ const AppContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @media only screen and (max-height: 1200px) {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  @media only screen and (max-height: 1000px) {
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+
 `
 
 export default AppContainer
