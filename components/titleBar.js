@@ -14,6 +14,7 @@ const StyledLink= styled.a`
   padding: 8px 0;
   color: black;
   font-weight: bold;
+  font-size: 20px;
 `
 
 const TitleBar = () => (
@@ -22,9 +23,9 @@ const TitleBar = () => (
       <div>💣&nbsp; &nbsp;Minesweeper</div>
     </TitleContainer>
     <div>
-      <StyledLink href="">easy</StyledLink>
-      <StyledLink href="">normal</StyledLink>
-      <StyledLink href="">hard</StyledLink>
+      <StyledLink href="/">easy</StyledLink>
+      <StyledLink href="/?width=16&height=16&bombs=16">normal</StyledLink>
+      <StyledLink href="/?width=24&height=24&bombs=99">hard</StyledLink>
     </div>
   </section>
 )

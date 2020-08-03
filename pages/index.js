@@ -12,7 +12,7 @@ import Generator from '../models/game/generator'
 import leftClickHandler from '../reducers/uncoverSquare'
 import rightClickHandler from '../reducers/markSquare'
 
-const Index = ({board, width, bombCount}) => {
+const Index = ({board, width, height, bombCount}) => {
   const [game, handleClick] = useState({
     board,
     status: "started",
@@ -27,7 +27,7 @@ const Index = ({board, width, bombCount}) => {
         status={game.status}
       >
       </InfoBar>
-      <Desk boardSize={width} status={game.status}>
+      <Desk width={width} height={height} status={game.status}>
       {game.board.map((row, rowIndex) => (
           row.map((square, squareIndex)=> {
             return (
@@ -52,10 +52,10 @@ const Index = ({board, width, bombCount}) => {
   )
 };
 
-export function getStaticProps() {
-  const width = 10
-  const height = 10
-  const bombCount = 10
+export async function getServerSideProps({query}) {
+  const width = parseInt(query.width) || 10
+  const height =  parseInt(query.height) || 10
+  const bombCount = parseInt(query.bombs) || 10
   const board = (new Generator(width,height,bombCount)).board
   return {
     props: {
