@@ -13,12 +13,14 @@ const AppContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  @media only screen and (max-height: 1200px) {
+
+  @media only screen and (max-height: 860px) {
     transform: translate(-50%, -50%) scale(0.8);
   }
 
-  @media only screen and (max-height: 1000px) {
-    transform: translate(-50%, -50%) scale(0.6);
+
+  @media only screen and (max-height: 768px) {
+    transform: translate(-50%, -50%) scale(0.5);
   }
 
 `
