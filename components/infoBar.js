@@ -16,29 +16,18 @@ const Container = styled.div`
     border-color: rgb(123, 127, 131) white white rgb(123, 127, 131);
     margin-bottom: 12px;
 `
-const statusEmojis = {
-  won: "😎",
-  started: "😀",
-  lost: "🤬",
 
-}
-
-export default ({ marksLeft , status})=>{
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  useEffect(() => {
-    if(status != 'started') return
-    setTimeout(() => {
-      setTimeElapsed(timeElapsed + 1);
-    }, 1000);
-
-  }, [timeElapsed]);
-
-  return (
-    <Container>
-      <RedDisplay>{`${timeElapsed}`.padStart(3, "0")}</RedDisplay>
-      {/* does a hard refresh, should really do a reload on client side */}
-      <SmileySquare href="/">{statusEmojis[status]}</SmileySquare>
-      <Timer>{`${marksLeft}`.padStart(3, "0")}</Timer>
+const Component = (props) => (
+  <Container>
+      <RedDisplay>{`${props.timeElapsed}`.padStart(3, "0")}</RedDisplay>
+      {/* does a hard refresh, should really do a reload on client side but
+          for me the page loads in 37ms, so for the target users this should be fine
+          https://www.nngroup.com/articles/powers-of-10-time-scales-in-ux/
+      */}
+      <SmileySquare href="/">{props.statusText}</SmileySquare>
+      <Timer>{`${props.marksLeft}`.padStart(3, "0")}</Timer>
     </Container>
-  )
-};
+)
+
+export default Component
+
