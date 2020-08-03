@@ -1,8 +1,8 @@
-# Minesweeper
+# Minesweeper [play it here](https://minesweeper.space)
 
 ## notes
- please check pull requests for work done on the challenge
- 
+ please check pull requests to see how it was built
+
 ## Installation
 
 It assumes you have the latest node and yarn installed.
@@ -15,7 +15,7 @@ open http://localhost:3000
 
 ## Rules
 
-The rules are pretty simple (try to play with the [demo](https://sweeper.now.sh/)):
+The rules are pretty simple
 
 * Player can left click to reveal square.
 * Player can right click to flag square as mine.

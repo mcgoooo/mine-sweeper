@@ -24,7 +24,7 @@ const Component = (props) => (
           for me the page loads in 37ms, so for the target users this should be fine
           https://www.nngroup.com/articles/powers-of-10-time-scales-in-ux/
       */}
-      <SmileySquare href="/">{props.statusText}</SmileySquare>
+      <SmileySquare onClick={()=>{ location && location.reload()}}>{props.statusText}</SmileySquare>
       <Timer>{`${props.marksLeft}`.padStart(3, "0")}</Timer>
     </Container>
 )
