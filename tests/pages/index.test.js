@@ -20,7 +20,7 @@ describe('index', () => {
       const rendered = TestRenderer.create(<Index {...ssrProps.props} />);
 
       const title = rendered.toTree().rendered.props.title;
-      expect(title).toBe('Minesweeper (active)');
+      expect(title).toBe('Minesweeper 95');
     });
 
     it('renders the correct amount of bombs', async () => {

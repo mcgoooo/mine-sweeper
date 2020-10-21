@@ -21,7 +21,7 @@ const Index = ({ board, width, height, bombCount }) => {
   });
 
   return (
-    <Layout title={`Minesweeper (active)`}>
+    <Layout title={`Minesweeper 95`}>
       <InfoBar marksLeft={game.marksLeft} status={game.status}></InfoBar>
       <Desk width={width} height={height} status={game.status}>
         {game.board.map((row, rowIndex) =>
