@@ -10,6 +10,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "start:docker": "next start -p 80",
     "test": "jest --verbose"
   },
   "dependencies": {
