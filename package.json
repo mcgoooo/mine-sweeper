@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
-    "@babel/preset-react": "^7.10.4",
+    "@babel/plugin-syntax-jsx": "^7.12.1",
+    "@babel/preset-react": "^7.12.10",
     "babel-jest": "^26.2.1",
     "jest": "^26.2.1",
     "react-test-renderer": "^16.13.1",
