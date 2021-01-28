@@ -64,7 +64,7 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Attirbution>
-            Minesweeper 95 made by Mcgooo
+            Minesweeper 95 made by Mcgoooo 🚀
             <a href="https://github.com/mcgoooo/mine-sweeper" target="_blank">
               source code
             </a>

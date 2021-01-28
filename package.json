@@ -3,15 +3,14 @@
   "version": "2.0.0",
   "description": "Minesweeper",
   "main": "index.js",
-  "author": "tajo <vojtech@miksu.cz>",
+  "author": "mcgoooo",
   "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "start:docker": "next start -p 80",
-    "test": "jest --verbose"
+    "start": "next start -p 80",
+    "test": "jest --verbose --testPathIgnorePatterns=cdk.out"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.12.10",
