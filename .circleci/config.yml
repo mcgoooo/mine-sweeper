@@ -6,19 +6,35 @@
 version: 2.1
 
 executors:
-  acceptance:
+  node-lts:
     docker:
       - image: circleci/node:lts
 
+orbs:
+  aws-cli: circleci/aws-cli@1.3.2
+
 jobs:
   test:
+    executor: node-lts
+    working_directory: /mnt/ramdisk
     steps:
       - checkout
-      - yarn install
-      - yarn test
+      - run: yarn install
+      - run: yarn test
+
+  deploy:
+    executor: node-lts
+    working_directory: /mnt/ramdisk
+    steps:
+      - checkout
+      - run: yarn install
+      - aws-cli/setup
+      - setup_remote_docker
+      - run: cd /mnt/ramdisk/infra && npm install && npx cdk deploy --app=initial-setup.js  --require-approval never
 
 workflows:
   on_commit:
     jobs:
       - test
-
+      - deploy:
+          context: aws
