@@ -6,11 +6,12 @@
 version: 2.1
 
 executors:
-  acceptance:
+  node-lts:
     docker:
       - image: circleci/node:lts
 
 jobs:
+  executor: node-lts
   test:
     steps:
       - checkout
