@@ -1,6 +1,6 @@
 // https://github.com/facebook/jest/issues/3126#issuecomment-521616378
 // TODO
-require('regenerator-runtime/runtime');
+// require('regenerator-runtime/runtime');
 
 import TestRenderer, { act } from 'react-test-renderer';
 import React from 'react';
