@@ -30,7 +30,7 @@ jobs:
       - run: yarn install
       - aws-cli/setup
       - setup_remote_docker
-      - run: cd /mnt/ramdisk/infra && npm install && npx cdk deploy --app=initial-setup.js  --require-approval never
+      - run: cd /mnt/ramdisk/infra && npm install && npx cdk deploy  --require-approval never
 
 workflows:
   on_commit:
