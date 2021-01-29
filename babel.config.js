@@ -7,7 +7,7 @@ module.exports = {
       "presets": ["next/babel"]
     },
     "test": {
-      "presets": ["env", "react","@babel/preset-react"],
+      "presets": ["@babel/preset-env", "@babel/react"],
       "plugins": ["@babel/plugin-syntax-jsx"]
     }
   }
