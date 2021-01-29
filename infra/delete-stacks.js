@@ -21,7 +21,7 @@ cloudformation.describeStacks({}, function(err, data) {
     console.log(reviewApps)
     console.log('REVIEW APPS WILL BE DELETED in twenty seconds')
 
-      reviewApps.forEach((ra)=>{
+    reviewApps.forEach((ra)=>{
         cloudformation.deleteStack({StackName: ra.StackName},(err, data)=>{
           if (err) {
             console.log(err);
