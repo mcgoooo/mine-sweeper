@@ -3,7 +3,6 @@ const AWS = require('aws-sdk')
 var cloudformation = new AWS.CloudFormation({region: 'us-east-1'});
 
 
-console.log(cloudformation)
 cloudformation.describeStacks({}, function(err, data) {
   if (err) {
     console.log(err);
