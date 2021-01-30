@@ -7,13 +7,22 @@ const ec2 = require('@aws-cdk/aws-ec2');
 const ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
 const cdk = require('@aws-cdk/core');
 const app = new cdk.App();
+const envCheck = require('./scripts/envcheck.js')
+const requriedEnv = [
+  'APP_NAME',
+  'CIRCLE_BRANCH',
+  'DEPLOY_ENVIRONMENT_CONTEXT',
+  'ROUTE_53_ZONE_ID',
+  'DOMAIN_NAME',
+]
+envCheck(requriedEnv)
 
-
-const APP_NAME = 'minesweeper'
+const APP_NAME = process.env.APP_NAME
 const BRANCH_NAME = process.env.CIRCLE_BRANCH.replace(/[^A-Za-z0-9]/g,'')
-const CONTEXT = "review"
-const ROUTE_53_ZONE_ID = 'Z06041793JVH1PH47I7M9'
-const DOMAIN_NAME = "mcgoooo.net"
+const CONTEXT = process.env.DEPLOY_ENVIRONMENT_CONTEXT
+const ROUTE_53_ZONE_ID = process.env.ROUTE_53_ZONE_ID
+const DOMAIN_NAME =  process.env.DOMAIN_NAME
+
 const DOCKERFILE_LOCATION = '../'
 const DRAINING_TIMEOUT = '60'
 const STACK_URI = `${APP_NAME}-${CONTEXT}-${BRANCH_NAME}`
@@ -48,39 +57,33 @@ const fargateDeploy = (image, stack, { domainZone, domainName} ) => {
   return deploy
 }
 
-
-
- class NextSite extends core.Construct {
+ class NextSiteFromLocalDockerFile extends core.Construct {
   constructor(parent, name) {
     super(parent, name)
     const localImage = getContainerfromLocalCode(DOCKERFILE_LOCATION)
-    this.zone = lookupZone(this, ROUTE_53_ZONE_ID, 'mcgoooo.net')
-
-    const deploy = fargateDeploy(localImage, parent, {
-      domainZone: this.zone,
-      domainName: `${CONTEXT}.${BRANCH_NAME}.${APP_NAME}`
+    fargateDeploy(localImage, parent, {
+      domainZone: parent.zone,
+      domainName: parent.domainName
     })
   }
 }
 
-
+// this should be a nested stack fro the vpc and cluster etc
+// but for this exeperimentation, this is fine
 class MinesweeperSiteStack extends cdk.Stack {
   constructor(parent, name, props) {
     super(parent, name, props);
-    const vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
-    this.cluster = new ecs.Cluster(this, 'Cluster', { vpc });
-    this.nextSite = new NextSite(this, 'NextSite');
- }
+    this.vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
+    this.domainName = `${CONTEXT}.${BRANCH_NAME}.${APP_NAME}`
+    this.cluster = new ecs.Cluster(this, 'Cluster', { vpc: this.vpc });
+    this.zone = lookupZone(this, ROUTE_53_ZONE_ID, DOMAIN_NAME)
+    this.nextSite = new NextSiteFromLocalDockerFile(this, 'NextSite');
+  }
 }
 
-const stack = new MinesweeperSiteStack(app, STACK_URI,{
-  env: {
-    account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION,
-    context: CONTEXT
-  }
-});
-if (isReview) cdk.Tags.of(stack).add("review-environment", "true")
+const stack = new MinesweeperSiteStack(app, STACK_URI);
 
+if (isReview) cdk.Tags.of(stack).add("review-environment", "true")
+if (isReview) cdk.Tags.of(stack).add("ephemeral-deletable", "true")
 
 app.synth();
