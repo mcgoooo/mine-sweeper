@@ -46,7 +46,6 @@ jobs:
     <<: *minesweeper_env
     steps:
       - checkout
-      - run: yarn install
       - aws-cli/setup
       - setup_remote_docker
       - run: cd infra && yarn install --frozen-lockfile && yarn ci:deploy-review-app
