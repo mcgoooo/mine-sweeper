@@ -40,10 +40,6 @@ const logStacks = (stacks) => {
   })))
 }
 
-
-
-
-
 module.exports = {
   deleteStack,
   FilterStacksByTags,
