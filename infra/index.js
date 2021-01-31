@@ -16,14 +16,16 @@ const requriedEnv = [
   'DEPLOY_ENVIRONMENT_CONTEXT',
   'ROUTE_53_ZONE_ID',
   'DOMAIN_NAME',
+  'CERTIFICATE_ARN'
 ]
 envCheck(requriedEnv)
 
 const APP_NAME = process.env.APP_NAME
-const BRANCH_NAME = process.env.CIRCLE_BRANCH.replace(/[^A-Za-z0-9]/g,'')
+const BRANCH_NAME = process.env.CIRCLE_BRANCH.replace(/[^A-Za-z0-9-\/]/g,'')
 const CONTEXT = process.env.DEPLOY_ENVIRONMENT_CONTEXT
 const ROUTE_53_ZONE_ID = process.env.ROUTE_53_ZONE_ID
 const DOMAIN_NAME =  process.env.DOMAIN_NAME
+const CERTIFICATE_ARN =  process.env.CERTIFICATE_ARN
 
 const DOCKERFILE_LOCATION = '../'
 const DRAINING_TIMEOUT = '60'
@@ -64,15 +66,10 @@ const fargateDeploy = (image, stack, { domainZone, domainName, certificate } ) =
   constructor(parent, name) {
     super(parent, name)
     const localImage = getContainerfromLocalCode(DOCKERFILE_LOCATION)
-    console.log(parent.domainName)
     fargateDeploy(localImage, parent, {
       domainZone: parent.zone,
       domainName: parent.domainName,
-      certificate: Certificate.fromCertificateArn(
-        this,
-        'subdomain-cert',
-        "arn:aws:acm:us-east-1:884489635572:certificate/1b8d22ff-550b-427d-aaed-3b8cbb73c572"
-      )
+      certificate: parent.certificate
     })
   }
 }
@@ -81,7 +78,11 @@ class MinesweeperSiteStack extends cdk.Stack {
   constructor(parent, name, props) {
     super(parent, name, props);
     this.vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
-    this.domainName = `${CONTEXT}_${BRANCH_NAME}_${APP_NAME}`
+    this.domainName = `${BRANCH_NAME}.${CONTEXT}.${APP_NAME}`
+    this.certificate = Certificate.fromCertificateArn(this,
+      'subdomain-cert',
+      CERTIFICATE_ARN
+    )
     this.cluster = new ecs.Cluster(this, 'Cluster', { vpc: this.vpc });
     this.zone = lookupZone(this, ROUTE_53_ZONE_ID, DOMAIN_NAME)
     this.nextSite = new NextSiteFromLocalDockerFile(this, 'NextSite');
@@ -91,6 +92,5 @@ class MinesweeperSiteStack extends cdk.Stack {
 const stack = new MinesweeperSiteStack(app, STACK_URI);
 
 if (isReview) cdk.Tags.of(stack).add("review-environment", "true")
-if (isReview) cdk.Tags.of(stack).add("ephemeral-deletable", "true")
 
 app.synth();
