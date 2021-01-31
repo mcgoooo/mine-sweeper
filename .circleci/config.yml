@@ -49,14 +49,14 @@ jobs:
       - run: yarn install
       - aws-cli/setup
       - setup_remote_docker
-      - run: cd infra && npm install && npm ci:deploy-review-app
+      - run: cd infra && yarn install --frozen-lockfile && yarn ci:deploy-review-app
 
   delete_old_review_apps:
     <<: *minesweeper_env
     steps:
       - checkout
       - aws-cli/setup
-      - run: cd infra && npm install && ci:destroy-old-review-apps
+      - run: cd infra && yarn install --frozen-lockfile && yarn ci:destroy-old-review-apps
 
 workflows:
   on_commit:
