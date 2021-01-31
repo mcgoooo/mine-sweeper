@@ -37,4 +37,6 @@ workflows:
     jobs:
       - test
       - deploy:
-          context: aws
+          context:
+            - aws
+            - minesweeper-review
