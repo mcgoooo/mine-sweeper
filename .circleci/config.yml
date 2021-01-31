@@ -5,6 +5,27 @@
 
 version: 2.1
 
+minesweeper_env: &minesweeper_env
+  executor: node-lts
+  working_directory: /mnt/ramdisk
+
+minesweeper_review_context: &minesweeper_review_context
+  context:
+    - aws
+    - minesweeper-review
+
+just_master: &just_master
+  filters:
+    branches:
+      only:
+        - master
+
+not_master: &not_master
+  filters:
+    branches:
+      ignore:
+        - master
+
 executors:
   node-lts:
     docker:
@@ -15,52 +36,43 @@ orbs:
 
 jobs:
   test:
-    executor: node-lts
-    working_directory: /mnt/ramdisk
+    <<: *minesweeper_env
     steps:
       - checkout
       - run: yarn install
       - run: yarn test
 
-  deploy:
-    executor: node-lts
-    working_directory: /mnt/ramdisk
+  deploy_minesweeper_ra:
+    <<: *minesweeper_env
     steps:
       - checkout
       - run: yarn install
       - aws-cli/setup
       - setup_remote_docker
-      - run: cd /mnt/ramdisk/infra && npm install && npm ci:deploy-review-app
+      - run: cd infra && npm install && npm ci:deploy-review-app
 
   delete_old_review_apps:
-    executor: node-lts
-    working_directory: /mnt/ramdisk
+    <<: *minesweeper_env
     steps:
       - checkout
       - aws-cli/setup
-      - run: cd /mnt/ramdisk/infra && npm install && ci:destroy-old-review-apps
+      - run: cd infra && npm install && ci:destroy-old-review-apps
 
 workflows:
   on_commit:
     jobs:
       - test
-      - deploy:
-          context:
-            - aws
-            - minesweeper-review
+      - deploy_minesweeper_ra:
+          <<: *minesweeper_review_context
 
   delete_old_review_apps:
     triggers:
       - schedule:
           cron: '19 * * * *'
-          filters:
-            branches:
-              only:
-                - master
+          <<: *just_master
+
     jobs:
       - delete_old_review_apps:
-          context:
-            - aws
-            - minesweeper-review
+          <<: *minesweeper_review_context
 
 
