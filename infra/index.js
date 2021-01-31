@@ -63,7 +63,8 @@ const fargateDeploy = (image, stack, { domainZone, domainName} ) => {
     const localImage = getContainerfromLocalCode(DOCKERFILE_LOCATION)
     fargateDeploy(localImage, parent, {
       domainZone: parent.zone,
-      domainName: parent.domainName
+      domainName: parent.domainName,
+      protocol: 'HTTPS'
     })
   }
 }
