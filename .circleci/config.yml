@@ -32,9 +32,30 @@ jobs:
       - setup_remote_docker
       - run: cd /mnt/ramdisk/infra && npm install && npx cdk deploy  --require-approval never
 
+  delete_old_review_apps:
+    executor: node-lts
+    working_directory: /mnt/ramdisk
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run: cd /mnt/ramdisk/infra && npm install && node ./stack-deletion/review-app-older-than.js
+
 workflows:
   on_commit:
     jobs:
       - test
       - deploy:
-          context: aws
+          context:
+            - aws
+            - minesweeper-review
+
+  remove_review_apps:
+    triggers:
+      - schedule:
+          cron: 0 * * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - delete_old_review_apps
