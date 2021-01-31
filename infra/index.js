@@ -68,8 +68,6 @@ const fargateDeploy = (image, stack, { domainZone, domainName} ) => {
   }
 }
 
-// this should be a nested stack fro the vpc and cluster etc
-// but for this exeperimentation, this is fine
 class MinesweeperSiteStack extends cdk.Stack {
   constructor(parent, name, props) {
     super(parent, name, props);
