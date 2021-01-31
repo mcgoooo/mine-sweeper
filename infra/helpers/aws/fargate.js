@@ -1,47 +1,25 @@
 
+const ecs = require('@aws-cdk/aws-ecs')
 const core =  require('@aws-cdk/core');
 const ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
-const path = require('path');
-
 const albFargate = ecs_patterns.ApplicationLoadBalancedFargateService
 
 class NextSiteFromLocalDockerFile extends core.Construct {
-  constructor(parent, name) {
-    super(parent, name)
-    const dockerFilePath = path.resolve(__dirname, parent.dockerfileLocation)
-    const localImage = ecs.ContainerImage.fromAsset(dockerFilePath)
-    fargateDeploy(localImage, parent, {
-      domainZone: parent.zone,
-      domainName: parent.domainName,
-      certificate: parent.certificate
-    })
+  constructor(stack, name) {
+    super(stack, name)
+    this.service = new albFargate(stack,`${name}-fargate-service`, localDockerFileOptions(stack));
+    this.service.targetGroup.setAttribute('deregistration_delay.timeout_seconds', "60")
   }
 }
 
-const fargateDeploy = (image, stack, { domainZone, domainName, certificate, drain_timeout = 60 } ) => {
-  const options = {
-    cluster: stack.cluster,
-    taskImageOptions: { image },
-    domainZone,
-    domainName,
-    certificate
-  }
-  const deploy = new albFargate(stack, domainName, options);
-  SetContainerDraintimeout(deploy, drain_timeout)
-  return deploy
-}
-
-
-const SetContainerDraintimeout = (deploy, drain_timeout) => {
-  deploy.targetGroup.setAttribute('deregistration_delay.timeout_seconds', drain_timeout)
-}
-
-getContainerfromLocalCode = (filePath) => {
-  return ecs.ContainerImage.fromAsset(path.resolve(__dirname, filePath))
-}
-
-
-
+localDockerFileOptions = (stack) => ({
+  ...stack.fargateOptions(),
+  taskImageOptions: {
+    image: ecs.ContainerImage.fromAsset(
+      stack.dockerFile
+    )
+  },
+})
 
 module.exports = {
   NextSiteFromLocalDockerFile
