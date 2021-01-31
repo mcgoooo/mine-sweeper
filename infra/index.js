@@ -64,7 +64,8 @@ const fargateDeploy = (image, stack, { domainZone, domainName} ) => {
     fargateDeploy(localImage, parent, {
       domainZone: parent.zone,
       domainName: parent.domainName,
-      protocol: 'HTTPS'
+      protocol: 'HTTPS',
+      listenerPort: '443'
     })
   }
 }
@@ -73,7 +74,7 @@ class MinesweeperSiteStack extends cdk.Stack {
   constructor(parent, name, props) {
     super(parent, name, props);
     this.vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
-    this.domainName = `${CONTEXT}.${BRANCH_NAME}.${APP_NAME}`
+    this.domainName = `${CONTEXT}_${BRANCH_NAME}_${APP_NAME}`
     this.cluster = new ecs.Cluster(this, 'Cluster', { vpc: this.vpc });
     this.zone = lookupZone(this, ROUTE_53_ZONE_ID, DOMAIN_NAME)
     this.nextSite = new NextSiteFromLocalDockerFile(this, 'NextSite');
