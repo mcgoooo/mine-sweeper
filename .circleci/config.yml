@@ -30,7 +30,7 @@ jobs:
       - run: yarn install
       - aws-cli/setup
       - setup_remote_docker
-      - run: cd /mnt/ramdisk/infra && npm install && npx cdk deploy  --require-approval never
+      - run: cd /mnt/ramdisk/infra && npm install && npm ci:deploy-review-app
 
   delete_old_review_apps:
     executor: node-lts
@@ -38,7 +38,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      - run: cd /mnt/ramdisk/infra && npm install && node ./stack-deletion/review-app-older-than.js
+      - run: cd /mnt/ramdisk/infra && npm install && ci:destroy-old-review-apps
 
 workflows:
   on_commit:
