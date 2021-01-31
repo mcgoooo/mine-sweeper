@@ -49,13 +49,18 @@ workflows:
             - aws
             - minesweeper-review
 
-  remove_review_apps:
+  delete_old_review_apps:
     triggers:
       - schedule:
-          cron: 0 * * * *
+          cron: '19 * * * *'
           filters:
             branches:
               only:
                 - master
     jobs:
-      - delete_old_review_apps
+      - delete_old_review_apps:
+          context:
+            - aws
+            - minesweeper-review
+
+
