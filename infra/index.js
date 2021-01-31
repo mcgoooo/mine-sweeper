@@ -6,6 +6,8 @@ const ecr = require('@aws-cdk/aws-ecr');
 const ec2 = require('@aws-cdk/aws-ec2');
 const ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
 const cdk = require('@aws-cdk/core');
+const { Certificate } = require('@aws-cdk/aws-certificatemanager');
+
 const app = new cdk.App();
 const envCheck = require('./scripts/envcheck.js')
 const requriedEnv = [
@@ -45,12 +47,13 @@ getContainerfromLocalCode = (filePath) => {
 
 const albFargate = ecs_patterns.ApplicationLoadBalancedFargateService
 
-const fargateDeploy = (image, stack, { domainZone, domainName} ) => {
+const fargateDeploy = (image, stack, { domainZone, domainName, certificate } ) => {
   const options = {
     cluster: stack.cluster,
     taskImageOptions: { image },
     domainZone,
-    domainName
+    domainName,
+    certificate
   }
   const deploy = new albFargate(stack, domainName, options);
   SetContainerDraintimeout(deploy, DRAINING_TIMEOUT)
@@ -61,11 +64,15 @@ const fargateDeploy = (image, stack, { domainZone, domainName} ) => {
   constructor(parent, name) {
     super(parent, name)
     const localImage = getContainerfromLocalCode(DOCKERFILE_LOCATION)
+    console.log(parent.domainName)
     fargateDeploy(localImage, parent, {
       domainZone: parent.zone,
       domainName: parent.domainName,
-      protocol: 'HTTPS',
-      listenerPort: '443'
+      certificate: Certificate.fromCertificateArn(
+        this,
+        'subdomain-cert',
+        "arn:aws:acm:us-east-1:884489635572:certificate/1b8d22ff-550b-427d-aaed-3b8cbb73c572"
+      )
     })
   }
 }
