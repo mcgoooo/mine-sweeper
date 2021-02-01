@@ -6,7 +6,7 @@
     FilterStacksByTags,
     FilterStacksNotUpdatedInTheLast,
     logStacks
-  } = require('../helpers/cloudformation')
+  } = require('../helpers/aws/cloudformation')
 
   try {
     envCheck(['DELETE_REVIEW_APPS_AFTER_IN_MINUTES'])

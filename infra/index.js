@@ -1,96 +1,34 @@
-const ecs = require('@aws-cdk/aws-ecs');
-const route53 = require('@aws-cdk/aws-route53');
-const core =  require('@aws-cdk/core');
-const path = require('path');
-const ecr = require('@aws-cdk/aws-ecr');
-const ec2 = require('@aws-cdk/aws-ec2');
-const ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
+const envCheck = require('./scripts/envcheck.js')
 const cdk = require('@aws-cdk/core');
-const { Certificate } = require('@aws-cdk/aws-certificatemanager');
+const MinesweeperSiteStack = require('./stacks/minesweeper')
+const path = require('path');
+
+envCheck([
+  'APP_NAME','CIRCLE_BRANCH','DEPLOY_ENVIRONMENT_CONTEXT','ROUTE_53_ZONE_ID',
+  'DOMAIN_NAME', 'CERTIFICATE_ARN'
+])
+
+const ENV = process.env
+const URI_SAFE_BRANCH = ENV.CIRCLE_BRANCH.replace(/[^A-Za-z0-9-\/]/g,'')
+const STACK_URI = `${ENV.APP_NAME}-${ENV.DEPLOY_ENVIRONMENT_CONTEXT}-${URI_SAFE_BRANCH}`
+
+// For this to work, you need to have your certificate within route53, and setup
+// via acm, a wildcard certificate. the wildcard setup for review branches
+// on minesweeper as `*.review.minesweeper.mcgoooo.net` and you then use that as
+// the certificate arn. this can not be done automatically unfortunately, from
+// a cursory glance
+
+const options = {
+  domainName: `${URI_SAFE_BRANCH}.${ENV.DEPLOY_ENVIRONMENT_CONTEXT}.${ENV.APP_NAME}.${ENV.DOMAIN_NAME}`,
+  certificateArn: ENV.CERTIFICATE_ARN,
+  route53ZoneId:  ENV.ROUTE_53_ZONE_ID,
+  rootDomainName:  ENV.DOMAIN_NAME,
+  stackUri: STACK_URI,
+  dockerFile: path.resolve(__dirname, `../`)
+}
 
 const app = new cdk.App();
-const envCheck = require('./scripts/envcheck.js')
-const requriedEnv = [
-  'APP_NAME',
-  'CIRCLE_BRANCH',
-  'DEPLOY_ENVIRONMENT_CONTEXT',
-  'ROUTE_53_ZONE_ID',
-  'DOMAIN_NAME',
-  'CERTIFICATE_ARN'
-]
-envCheck(requriedEnv)
-
-const APP_NAME = process.env.APP_NAME
-const BRANCH_NAME = process.env.CIRCLE_BRANCH.replace(/[^A-Za-z0-9-\/]/g,'')
-const CONTEXT = process.env.DEPLOY_ENVIRONMENT_CONTEXT
-const ROUTE_53_ZONE_ID = process.env.ROUTE_53_ZONE_ID
-const DOMAIN_NAME =  process.env.DOMAIN_NAME
-const CERTIFICATE_ARN =  process.env.CERTIFICATE_ARN
-
-const DOCKERFILE_LOCATION = '../'
-const DRAINING_TIMEOUT = '60'
-const STACK_URI = `${APP_NAME}-${CONTEXT}-${BRANCH_NAME}`
-const isReview = CONTEXT == 'review'
-
-const SetContainerDraintimeout = (deploy, drain_timeout) => {
-  deploy.targetGroup.setAttribute('deregistration_delay.timeout_seconds', drain_timeout)
-}
-
-const lookupZone = (core, id, name) => {
-  return route53.HostedZone.fromHostedZoneAttributes(core, 'Zone', {
-    hostedZoneId: id,
-    zoneName: name
-  })
-}
-
-getContainerfromLocalCode = (filePath) => {
-  return ecs.ContainerImage.fromAsset(path.resolve(__dirname, filePath))
-}
-
-const albFargate = ecs_patterns.ApplicationLoadBalancedFargateService
-
-const fargateDeploy = (image, stack, { domainZone, domainName, certificate } ) => {
-  const options = {
-    cluster: stack.cluster,
-    taskImageOptions: { image },
-    domainZone,
-    domainName,
-    certificate
-  }
-  const deploy = new albFargate(stack, domainName, options);
-  SetContainerDraintimeout(deploy, DRAINING_TIMEOUT)
-  return deploy
-}
-
- class NextSiteFromLocalDockerFile extends core.Construct {
-  constructor(parent, name) {
-    super(parent, name)
-    const localImage = getContainerfromLocalCode(DOCKERFILE_LOCATION)
-    fargateDeploy(localImage, parent, {
-      domainZone: parent.zone,
-      domainName: parent.domainName,
-      certificate: parent.certificate
-    })
-  }
-}
-
-class MinesweeperSiteStack extends cdk.Stack {
-  constructor(parent, name, props) {
-    super(parent, name, props);
-    this.vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
-    this.domainName = `${BRANCH_NAME}.${CONTEXT}.${APP_NAME}`
-    this.certificate = Certificate.fromCertificateArn(this,
-      'subdomain-cert',
-      CERTIFICATE_ARN
-    )
-    this.cluster = new ecs.Cluster(this, 'Cluster', { vpc: this.vpc });
-    this.zone = lookupZone(this, ROUTE_53_ZONE_ID, DOMAIN_NAME)
-    this.nextSite = new NextSiteFromLocalDockerFile(this, 'NextSite');
-  }
-}
-
-const stack = new MinesweeperSiteStack(app, STACK_URI);
-
-if (isReview) cdk.Tags.of(stack).add("review-environment", "true")
+const stack = new MinesweeperSiteStack(app, STACK_URI, options);
+cdk.Tags.of(stack).add("review-environment", "true")
 
 app.synth();
