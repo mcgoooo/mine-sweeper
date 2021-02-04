@@ -4,6 +4,18 @@
 #
 
 version: 2.1
+orbs:
+  pr-comment: benjlevesque/pr-comment@0.1.4
+  aws-cli: circleci/aws-cli@1.3.2
+
+executors:
+  node-lts:
+    docker:
+      - image: circleci/node:lts
+
+############
+# REUSABLE #
+############
 
 minesweeper_env: &minesweeper_env
   executor: node-lts
@@ -26,13 +38,9 @@ not_master: &not_master
       ignore:
         - master
 
-executors:
-  node-lts:
-    docker:
-      - image: circleci/node:lts
-
-orbs:
-  aws-cli: circleci/aws-cli@1.3.2
+########
+# JOBS #
+########
 
 jobs:
   test:
@@ -56,6 +64,12 @@ jobs:
       - aws-cli/setup
       - setup_remote_docker
       - run: cd infra && yarn install --frozen-lockfile && yarn ci:deploy-review-app
+      - pr-comment/pr-comment:
+          comment: |
+            bleep bloop bloop: i am a bot
+            @mcgoooo's custom aws review enviroment is [here](https://$CIRCLE_BRANCH.review.minesweeper.mcgoooo.net)
+            the review enviroment will self destruct after not being updated for two hours as @mcgoooo is cheap :rocket:
+          maxComments: 2
 
   delete_old_review_apps:
     <<: *minesweeper_env
@@ -64,6 +78,10 @@ jobs:
       - aws-cli/setup
       - run: cd infra && yarn install --frozen-lockfile && yarn ci:destroy-old-review-apps
 
+#############
+# WORKFLOWS #
+#############
+
 workflows:
   on_commit:
     jobs:
@@ -71,6 +89,10 @@ workflows:
       - prettier
       - deploy_minesweeper_ra:
           <<: *minesweeper_review_context
+
+#############
+# CRON JOBS #
+#############
 
   delete_old_review_apps:
     triggers:
