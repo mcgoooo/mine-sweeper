@@ -31,6 +31,8 @@
     "@aws-cdk/core": "*",
     "@aws-sdk/client-s3": "*",
     "@aws-sdk/node-http-handler": "*",
-    "aws-sdk": "*"
+    "aws-sdk": "*",
+    "@octokit/core": "*",
+    "@octokit/rest": "18.*"
   }
 }
