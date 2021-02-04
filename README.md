@@ -22,3 +22,13 @@ The rules are pretty simple
 - Player can right click to flag square as mine.
 - The number tells how many mines are in the immediate neighborhood.
 - The goal is to reveal or flag all squares without revealing a mine.
+
+## infrastructure
+
+the app is primarily deployed in production on vercel. for demonstration
+puproses, and to learn, i also made an aws review environemnt stack, which
+has its own [readme](/infra/README.md)
+
+basically every pull request will make its own review environment on aws,
+setup the domain, and tear itself down. this is also where we will run the
+the end to end tests
