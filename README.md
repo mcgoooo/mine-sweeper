@@ -26,7 +26,7 @@ The rules are pretty simple
 ## infrastructure
 
 the app is primarily deployed in production on vercel. for demonstration
-puproses, and to learn, i also made an aws review environemnt stack, which
+puproses, and to learn, i also made an aws review environment stack, which
 has its own [readme](/infra/README.md)
 
 basically every pull request will make its own review environment on aws,
