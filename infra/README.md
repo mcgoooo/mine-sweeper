@@ -4,13 +4,9 @@ This is the review app environments for the minesweeper codebase, which was main
 
 ### motivation
 
-By this, in an ideal world, a developer has a new stack per pull request for me. this enables developers more freedom to solve the problems at hand. ultimately, sometimes it is valuable to be able to boot up the whole stack, and not just rely on contract testing etc, and perfect world solutions. obviously this is not always possible, but it is a good aim to have, and you can always rely on staging or production for parts of the stack.
+My old [CEO](https://twitter.com/cameronp) told me, companies that work well have _individual problems and shared code_ and ones that don't have _shared problems and individual code_ giving developers real life aws sandboxes is part of that for me.
 
-It also helps product engineers show a solution to a problem across the whole stack and for prototyping. I strongly believe that the microservice world sometimes makes it harder for product and design, and for cross team cohesion. it makes it hard to prototype across the whole stack, or for individual developers to scratch their itches, or understand how the _whole_ stack is put together. Its also necesarry if you have autometed e2e tests you wish to run before merging to master. i am a big fan of heroku review apps.
-
-My old [CEO](https://twitter.com/cameronp) told me, companies that work well have _individual problems and shared code_ and ones that don't have _shared problems and individual code_ giving developers sandboxes is part of that for me.
-
-another part of the motivation is to show the powers of aws CDK, and a learnings for myself. I have spent a lot of time in my life getting similar stacks built, so it would be good to have a working example, top to bottom to show.
+another part of the motivation is to show the powers of aws CDK, and a learnings for myself. I have spent a lot of time in my life getting similar stacks built, so it would be good to have a working example, top to bottom to show, and understand myself how to put all the constituent parts together.
 
 ### what does it do
 

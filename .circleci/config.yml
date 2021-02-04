@@ -69,7 +69,7 @@ jobs:
             bleep bloop bloop: i am a bot
             @mcgoooo's custom aws review enviroment is [here](https://$CIRCLE_BRANCH.review.minesweeper.mcgoooo.net)
             the review enviroment will self destruct after not being updated for two hours as @mcgoooo is cheap :rocket:
-          maxComments: 2
+          maxComments: 3
 
   delete_old_review_apps:
     <<: *minesweeper_env
@@ -90,9 +90,9 @@ workflows:
       - deploy_minesweeper_ra:
           <<: *minesweeper_review_context
 
-#############
-# CRON JOBS #
-#############
+  #############
+  # CRON JOBS #
+  #############
 
   delete_old_review_apps:
     triggers:
