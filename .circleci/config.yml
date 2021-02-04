@@ -63,13 +63,11 @@ jobs:
       - checkout
       - aws-cli/setup
       - setup_remote_docker
-      - run: cd infra && yarn install --frozen-lockfile && yarn ci:deploy-review-app
-      - pr-comment/pr-comment:
-          comment: |
-            bleep bloop bloop: i am a bot
-            @mcgoooo's custom aws review enviroment is [here](https://$CIRCLE_BRANCH.review.minesweeper.mcgoooo.net)
-            the review enviroment will self destruct after not being updated for two hours as @mcgoooo is cheap :rocket:
-          maxComments: 3
+      - run:
+          command: |
+            stty cols 200
+            cd infra && yarn install --frozen-lockfile && yarn ci:deploy-review-app --verbose
+      - run: node ./infra/scripts/pr-comment.js
 
   delete_old_review_apps:
     <<: *minesweeper_env

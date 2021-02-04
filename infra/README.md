@@ -1,6 +1,17 @@
 # minesweeper infra
 
-This is the review app environments for the minesweeper codebase, which was mainly an excuse to play about with amazon cdk, and to make what is close to my preferred deployment environment.
+infra for review app environments for the minesweeper codebase
+
+
+### github comment on review app deploy
+![Screenshot 2021-02-04 at 19 01 24](https://user-images.githubusercontent.com/248888/106942509-2a382580-671c-11eb-8f94-8a3b1536abf5.png)
+
+### review app url setup
+![Screenshot 2021-02-04 at 19 01 33](https://user-images.githubusercontent.com/248888/106942514-2c01e900-671c-11eb-858e-a6240fe74c76.png)
+
+### circleci tasks, including auto deletion
+![Screenshot 2021-02-04 at 19 06 35](https://user-images.githubusercontent.com/248888/106942520-2dcbac80-671c-11eb-8b70-2774c5741ae9.png)
+
 
 ### motivation
 
