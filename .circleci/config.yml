@@ -73,5 +73,3 @@ workflows:
     jobs:
       - delete_old_review_apps:
           <<: *minesweeper_review_context
-
-
