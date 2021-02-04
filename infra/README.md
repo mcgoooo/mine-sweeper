@@ -35,6 +35,7 @@ please check the `index.js` file, this lists all the things needed for a deploym
 to deploy once you have all this simply run `cdk deploy` and to destroy the stack run `cdk destroy`, pelase check out the circleci [config](https://github.com/mcgoooo/mine-sweeper/blob/master/.circleci/config.yml) as well.
 
 the following environments are necesarry, and referenced in the `index.js`
+
 ```
   "APP_NAME"                        - e.g. minesweeper
   "CIRCLE_BRANCH"                   - the git branch
