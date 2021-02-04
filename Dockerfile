@@ -3,7 +3,8 @@ FROM  node:current-alpine
 WORKDIR /usr/src/app
 # Installing dependencies
 COPY package*.json ./
-RUN npm install
+# todo change to yarn and multi stage to slim image down
+RUN npm ci
 # Copying source files
 COPY . .
 # Building app

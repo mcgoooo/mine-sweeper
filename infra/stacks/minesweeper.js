@@ -10,7 +10,7 @@ const cdk = require("@aws-cdk/core")
 class MinesweeperSiteStack extends cdk.Stack {
   constructor(parent, name, props) {
     super(parent, name, props)
-    this.domainName = props.domainName
+    this.domainName = props.fullDomainName
     this.stackUri = props.stackUri
     this.dockerFile = props.dockerFile
 
