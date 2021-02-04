@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled"
 
 const Square = styled.div`
   width: 40px;
@@ -6,19 +6,19 @@ const Square = styled.div`
   padding: 10px;
   cursor: pointer;
   background-color: ${(props) =>
-    props.uncovered && props.type == 'bomb' ? 'red' : 'rgb(187, 192, 196)'};
+    props.uncovered && props.type == "bomb" ? "red" : "rgb(187, 192, 196)"};
   border: ${(props) =>
-    props.uncovered ? '1px dashed black' : '2px solid black'};
+    props.uncovered ? "1px dashed black" : "2px solid black"};
   border-color: ${(props) =>
     props.uncovered
-      ? 'rgba(32,32,32,0.2)'
-      : 'rgb(246,247,248) rgb(32,32,32) rgb(32,32,32) rgb(246,247,248)'};
-  border-width: ${(props) => (props.uncovered ? '0 2px 2px 0' : '2px')};
+      ? "rgba(32,32,32,0.2)"
+      : "rgb(246,247,248) rgb(32,32,32) rgb(32,32,32) rgb(246,247,248)"};
+  border-width: ${(props) => (props.uncovered ? "0 2px 2px 0" : "2px")};
   line-height: 1;
   box-shadow: ${(props) =>
-    props.uncovered ? 'initial' : 'inset 0px -2px 6px rgba(32,32,32,0.2)'};
+    props.uncovered ? "initial" : "inset 0px -2px 6px rgba(32,32,32,0.2)"};
   text-align: center;
-`;
+`
 
 export const SmileySquare = styled(Square)`
   height: 32px;
@@ -31,6 +31,6 @@ export const SmileySquare = styled(Square)`
   &:hover {
     background-color: rgb(177, 182, 186);
   }
-`.withComponent('a');
+`.withComponent("a")
 
-export default Square;
+export default Square

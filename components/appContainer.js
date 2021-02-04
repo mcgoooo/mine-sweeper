@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled"
 
 const AppContainer = styled.div`
   background-color: rgb(187, 192, 196);
@@ -19,6 +19,6 @@ const AppContainer = styled.div`
   @media only screen and (max-height: 768px) {
     transform: translate(-50%, -50%) scale(0.5);
   }
-`;
+`
 
-export default AppContainer;
+export default AppContainer

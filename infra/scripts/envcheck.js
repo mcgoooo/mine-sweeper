@@ -1,10 +1,10 @@
 //https://github.com/maxchou415/node-envchecker/blob/master/index.js
 module.exports = function (variables) {
   if (variables.isArray === false) {
-    throw (new Error('ENV File must be a array.'))
+    throw new Error("ENV File must be a array.")
   }
   if (variables.length <= 0) {
-    throw (new Error('ENV File can not be empty.'))
+    throw new Error("ENV File can not be empty.")
   }
 
   var env = process.env
@@ -18,7 +18,7 @@ module.exports = function (variables) {
 
   if (lostItems.length > 0) {
     console.error(lostItems)
-    throw (new Error('These variables are required.'))
+    throw new Error("These variables are required.")
   }
 
   return true

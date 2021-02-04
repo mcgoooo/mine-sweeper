@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled"
 
 const Desk = styled.div`
   width: ${(props) => 40 * props.width + 16}px;
@@ -10,6 +10,6 @@ const Desk = styled.div`
   flex-wrap: wrap;
   align-content: flex-start;
   pointer-events: ${(props) =>
-    props.status != 'started' ? 'none' : 'initial'};
-`;
-export default Desk;
+    props.status != "started" ? "none" : "initial"};
+`
+export default Desk

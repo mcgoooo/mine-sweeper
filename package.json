@@ -10,7 +10,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start -p 80",
-    "test": "jest --verbose --testPathIgnorePatterns=cdk.out"
+    "test": "jest --verbose --testPathIgnorePatterns=cdk.out",
+    "prettier:write": "prettier . --write",
+    "prettier:difference": "prettier . --list-different"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
@@ -31,5 +33,9 @@
     "babel-jest": "^26.2.1",
     "jest": "^26.2.1",
     "react-test-renderer": "^16.13.1"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false
   }
 }

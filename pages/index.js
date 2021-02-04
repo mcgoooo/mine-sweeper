@@ -1,24 +1,24 @@
-import { useState } from 'react';
+import { useState } from "react"
 
-import InfoBar from '../containers/infoBar';
+import InfoBar from "../containers/infoBar"
 
-import Layout from '../components/layout';
-import Desk from '../components/desk';
-import Square from '../components/square';
-import SquareContents from '../components/squareContents';
+import Layout from "../components/layout"
+import Desk from "../components/desk"
+import Square from "../components/square"
+import SquareContents from "../components/squareContents"
 
-import Generator from '../models/game/generator';
+import Generator from "../models/game/generator"
 
-import leftClickHandler from '../reducers/uncoverSquare';
-import rightClickHandler from '../reducers/markSquare';
+import leftClickHandler from "../reducers/uncoverSquare"
+import rightClickHandler from "../reducers/markSquare"
 
 const Index = ({ board, width, height, bombCount }) => {
   const [game, handleClick] = useState({
     board,
-    status: 'started',
+    status: "started",
     bombCount,
-    marksLeft: bombCount
-  });
+    marksLeft: bombCount,
+  })
 
   return (
     <Layout title={`Minesweeper 95`}>
@@ -32,39 +32,37 @@ const Index = ({ board, width, height, bombCount }) => {
                 type={square.type}
                 uncovered={square.uncovered}
                 onClick={() => {
-                  handleClick(
-                    leftClickHandler({ game, rowIndex, squareIndex })
-                  );
+                  handleClick(leftClickHandler({ game, rowIndex, squareIndex }))
                 }}
                 onContextMenu={(e) => {
-                  e.preventDefault();
+                  e.preventDefault()
                   handleClick(
                     rightClickHandler({ game, rowIndex, squareIndex })
-                  );
+                  )
                 }}
               >
                 <SquareContents square={square}></SquareContents>
               </Square>
-            );
+            )
           })
         )}
       </Desk>
     </Layout>
-  );
-};
+  )
+}
 
 export async function getServerSideProps({ query }) {
-  const width = parseInt(query.width) || 10;
-  const height = parseInt(query.height) || 10;
-  const bombCount = parseInt(query.bombs) || 10;
-  const board = new Generator({ width, height, bombCount }).board;
+  const width = parseInt(query.width) || 10
+  const height = parseInt(query.height) || 10
+  const bombCount = parseInt(query.bombs) || 10
+  const board = new Generator({ width, height, bombCount }).board
   return {
     props: {
       board,
       width,
-      bombCount
-    }
-  };
+      bombCount,
+    },
+  }
 }
 
-export default Index;
+export default Index

@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import { Fragment } from 'react';
+import styled from "@emotion/styled"
+import { Fragment } from "react"
 const TitleContainer = styled.div`
   background-color: rgb(16, 0, 158);
   color: white;
   line-height: 1;
   padding: 6px;
-`;
+`
 const StyledLink = styled.a`
   width: 33.33%;
   display: inline-block;
@@ -14,7 +14,7 @@ const StyledLink = styled.a`
   color: black;
   font-weight: bold;
   font-size: 20px;
-`;
+`
 
 const TitleBar = () => (
   <section>
@@ -27,6 +27,6 @@ const TitleBar = () => (
       <StyledLink href="/?width=30&height=16&bombs=99">hard</StyledLink>
     </div>
   </section>
-);
+)
 
-export default TitleBar;
+export default TitleBar

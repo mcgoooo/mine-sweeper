@@ -42,6 +42,13 @@ jobs:
       - run: yarn install
       - run: yarn test
 
+  prettier:
+    <<: *minesweeper_env
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn prettier:difference
+
   deploy_minesweeper_ra:
     <<: *minesweeper_env
     steps:
@@ -61,17 +68,16 @@ workflows:
   on_commit:
     jobs:
       - test
+      - prettier
       - deploy_minesweeper_ra:
           <<: *minesweeper_review_context
 
   delete_old_review_apps:
     triggers:
       - schedule:
-          cron: '19 * * * *'
+          cron: "19 * * * *"
           <<: *just_master
 
     jobs:
       - delete_old_review_apps:
           <<: *minesweeper_review_context
-
-
