@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "ci:deploy-review-app": "npx cdk deploy --require-approval never",
+    "ci:deploy-review-app": "npx cdk deploy --require-approval never --verbose",
     "ci:destroy-old-review-apps": "node ./stack-deletion/review-app-older-than.js",
     "ci:destroy-all-review-apps": "node ./stack-deletion/review-apps-all.js",
     "cdk": "cdk"
