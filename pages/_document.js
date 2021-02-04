@@ -1,5 +1,5 @@
-import Document, { Head, Main, NextScript } from 'next/document';
-import styled from '@emotion/styled';
+import Document, { Head, Main, NextScript } from "next/document"
+import styled from "@emotion/styled"
 const Attirbution = styled.div`
   padding: 20px;
   color: white;
@@ -14,8 +14,8 @@ const Attirbution = styled.div`
   border-width: 0 0 6px 6px;
   border-style: solid;
   transition: border-color 0.3s;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   &:hover {
     z-index: 9999;
     border-color: rgba(70, 190, 190, 1);
@@ -33,7 +33,7 @@ const Attirbution = styled.div`
   a:first-of-type {
     margin-top: 24px;
   }
-`;
+`
 export default class MyDocument extends Document {
   render() {
     return (
@@ -50,7 +50,7 @@ export default class MyDocument extends Document {
                   font-family: 'Microsoft Sans Serif', 'Open Sans', sans-serif;
                   background-color: rgb(60, 170, 170);
                 }
-               `
+               `,
             }}
           />
           <link
@@ -82,6 +82,6 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </html>
-    );
+    )
   }
 }

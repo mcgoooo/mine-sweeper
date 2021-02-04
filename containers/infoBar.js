@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import InfoBar from '../components/infoBar';
+import { useState, useEffect } from "react"
+import InfoBar from "../components/infoBar"
 const statusEmojis = {
-  won: '😎',
-  started: '😀',
-  lost: '🤬'
-};
+  won: "😎",
+  started: "😀",
+  lost: "🤬",
+}
 const Container = ({ ...props }) => {
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const statusText = statusEmojis[props.status];
+  const [timeElapsed, setTimeElapsed] = useState(0)
+  const statusText = statusEmojis[props.status]
   useEffect(() => {
-    if (props.status != 'started') return;
+    if (props.status != "started") return
     setTimeout(() => {
-      setTimeElapsed(timeElapsed + 1);
-    }, 1000);
-  }, [timeElapsed]);
+      setTimeElapsed(timeElapsed + 1)
+    }, 1000)
+  }, [timeElapsed])
 
   return (
     <InfoBar
@@ -21,7 +21,7 @@ const Container = ({ ...props }) => {
       timeElapsed={timeElapsed}
       statusText={statusText}
     ></InfoBar>
-  );
-};
+  )
+}
 
-export default Container;
+export default Container

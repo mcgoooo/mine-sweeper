@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled"
 
 const Container = styled.div`
   padding: 12px;
@@ -8,6 +8,6 @@ const Container = styled.div`
   border-style: solid;
   border-width: 6px;
   border-color: white rgb(123, 127, 131) rgb(123, 127, 131) white;
-`;
+`
 
-export default Container;
+export default Container
