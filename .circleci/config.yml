@@ -90,9 +90,9 @@ workflows:
       - deploy_minesweeper_ra:
           <<: *minesweeper_review_context
 
-#############
-# CRON JOBS #
-#############
+  #############
+  # CRON JOBS #
+  #############
 
   delete_old_review_apps:
     triggers:
