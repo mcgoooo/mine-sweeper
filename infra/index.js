@@ -1,6 +1,8 @@
 const envCheck = require("./scripts/envcheck.js")
 const cdk = require("@aws-cdk/core")
 const MinesweeperSiteStack = require("./stacks/minesweeper")
+const ClusterStack = require("./stacks/cluster")
+
 const path = require("path")
 const { stackUri, fullDomainName } = require("./scripts/pr-utils")
 const ENV = process.env
@@ -33,7 +35,14 @@ const options = {
 }
 
 const app = new cdk.App()
-const stack = new MinesweeperSiteStack(app, stackUri(), options)
+const baseInfra = new ClusterStack(app, "minesweeper-review")
+
+const stack = new MinesweeperSiteStack(app, stackUri(), {
+  ...options,
+  cluster: baseInfra.cluster,
+})
+
 cdk.Tags.of(stack).add("review-environment", "true")
+cdk.Tags.of(baseInfra).add("review-environment-infra", "true")
 
 app.synth()
