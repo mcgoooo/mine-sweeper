@@ -6,9 +6,10 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "ci:deploy-review-app": "npx cdk deploy --require-approval never --all",
-    "ci:destroy-old-review-apps": "node ./stack-deletion/review-app-older-than.js",
-    "ci:destroy-all-review-apps": "node ./stack-deletion/review-apps-all.js",
+    "ci:deploy:review-app": "npx cdk deploy --require-approval never --all",
+    "ci:destroy:review-apps:old": "node ./stack-deletion/review-app-older-than.js",
+    "ci:destroy:review-apps:all": "node ./stack-deletion/review-apps-all.js",
+    "ci:destroy:review-apps:infra": "node ./stack-deletion/review-apps-infra.js",
     "cdk": "cdk"
   },
   "author": {
