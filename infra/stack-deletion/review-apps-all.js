@@ -10,12 +10,12 @@
   })
   const { Stacks } = await cloudformation.describeStacks({}).promise()
   const reviewApps = FilterStacksByTags(Stacks, "review-environment", "true")
-  console.log("REVIEW APPS BEING DELETED")
-  console.log(
-    reviewApps.map((stack) => ({
-      name: stack.StackName,
-      tags: stack.Tags.map((tag) => `${tag.Key} - ${tag.Value}`),
-    }))
-  )
-  reviewApps.forEach((ra) => deleteStack(ra.StackName, cloudformation))
+
+  if (reviewApps.length > 0) {
+    console.log("REVIEW APPS BEING DELETED")
+    logStacks(reviewApps)
+    reviewApps.forEach((ra) => deleteStack(ra.StackName, cloudformation))
+  } else {
+    console.log("no old review apps to delete")
+  }
 })()

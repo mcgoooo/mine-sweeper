@@ -83,8 +83,20 @@ jobs:
           name: delete reviews apps that have not been updated in ${DELETE_REVIEW_APPS_AFTER_IN_MINUTES}
           command: |
             cd infra &&
-            export PR_NUMBER=${CIRCLE_PULL_REQUEST##*/} &&
             yarn ci:destroy-old-review-apps
+
+  delete_review_apps_infra:
+    <<: *minesweeper_env
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run: cd infra && yarn install --frozen-lockfile
+      - run:
+          name: delete reviews apps infra
+          command: |
+            cd infra &&
+            yarn ci:destroy-review-apps-all &&
+            yarn ci:destroy-review-apps-infra
 
 #############
 # WORKFLOWS #
@@ -107,7 +119,15 @@ workflows:
       - schedule:
           cron: "19 * * * *"
           <<: *just_master
-
     jobs:
       - delete_old_review_apps:
+          <<: *minesweeper_review_context
+
+  delete_review_apps_infra:
+    triggers:
+      - schedule:
+          cron: "30 17 * * *"
+          <<: *just_master
+    jobs:
+      - delete_review_apps_infra:
           <<: *minesweeper_review_context
