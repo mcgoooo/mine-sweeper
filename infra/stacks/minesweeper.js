@@ -13,6 +13,7 @@ class MinesweeperSiteStack extends cdk.Stack {
     this.domainName = props.fullDomainName
     this.stackUri = props.stackUri
     this.dockerFile = props.dockerFile
+    this.cluster = props.cluster
 
     this.domainZone = getZone(this, props.route53ZoneId, props.rootDomainName)
     this.certificate = GetCertFromArn(
@@ -21,19 +22,11 @@ class MinesweeperSiteStack extends cdk.Stack {
       props.certificateArn
     )
 
-    this.setCluster()
     this.nextSite = new NextSiteFromLocalDockerFile(
       this,
       `${this.stackUri}-next`
     )
   }
-
-  setCluster() {
-    // i think i should jsut set up a vpc outside this repo
-    const vpc = new ec2.Vpc(this, `${this.stackUri}-vpc`, { maxAzs: 2 })
-    this.cluster = new ecs.Cluster(this, `${this.stackUri}-cluster`, { vpc })
-  }
-
   fargateOptions() {
     return {
       cluster: this.cluster,
