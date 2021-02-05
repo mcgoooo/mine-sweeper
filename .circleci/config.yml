@@ -92,10 +92,15 @@ jobs:
       - aws-cli/setup
       - run: cd infra && yarn install --frozen-lockfile
       - run:
-          name: delete reviews apps infra
+          name: delete all reviews apps and wait five minutes for stacks to delete
           command: |
             cd infra &&
-            yarn ci:destroy-all-review-apps &&
+            yarn ci:destroy-all-review-apps
+            && sleep 300
+      - run:
+          name: delete all reviews apps infra
+          command: |
+            cd infra &&
             yarn ci:destroy-review-apps-infra
 
 #############
@@ -126,7 +131,7 @@ workflows:
   delete_review_apps_infra:
     triggers:
       - schedule:
-          cron: "03 18 * * *"
+          cron: "00 21 * * *"
           <<: *just_master
     jobs:
       - delete_review_apps_infra:
