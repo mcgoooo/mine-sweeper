@@ -1,24 +1,25 @@
 ;(async function () {
   const { Octokit } = require("@octokit/rest")
-  const comment = `bleep bloop bloop: i am a bot
-  @mcgoooo's custom aws review enviroment is [here](https://${process.env.CIRCLE_BRANCH}.review.minesweeper.mcgoooo.net)
-  the review enviroment will self destruct after not being updated for two hours as @mcgoooo is cheap :rocket:`
-  const options = {
-    owner: "mcgoooo",
-    repo: "mine-sweeper",
-    issue_number: 34,
-  }
+  const octokit = new Octokit({ auth: process.env.GH_TOKEN })
+
+  const {
+    prCommentsIncludeText,
+    enviromentLocationComment,
+    fullDomainName,
+    prOptions,
+  } = require("./pr-utils")
+
   try {
-    const octokit = new Octokit({ auth: process.env.GH_TOKEN })
-    const response = await octokit.issues.listComments(options)
-    const hasEnvironmentComment = response.data.some((el) =>
-      el.body.includes("bleep bloop")
-    )
-    if (hasEnvironmentComment)
-      return console.log("not creating comment, as we have it already")
+    const { data: comments } = await octokit.issues.listComments(prOptions())
+    const hasComment = prCommentsIncludeText(comments, fullDomainName())
+    console.log("adding comment to github with the review environment")
+    if (hasComment) return console.log("already commented 🚀")
+
     octokit.issues.createComment({
-      ...options,
-      body: comment,
+      owner: "mcgoooo",
+      repo: process.env.CIRCLE_PROJECT_REPONAME,
+      issue_number: process.env.PR_NUMBER,
+      body: enviromentLocationComment(fullDomainName()),
     })
     console.log("comment created")
   } catch (error) {

@@ -47,14 +47,14 @@ jobs:
     <<: *minesweeper_env
     steps:
       - checkout
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
       - run: yarn test
 
   prettier:
     <<: *minesweeper_env
     steps:
       - checkout
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
       - run: yarn prettier:difference
 
   deploy_minesweeper_ra:
@@ -62,19 +62,29 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
+          name: deploy and notify
           command: |
-            stty cols 200
-            cd infra && yarn install --frozen-lockfile && yarn ci:deploy-review-app --verbose
-      - run: node ./infra/scripts/pr-comment.js
+            stty cols 200 && cd infra &&
+            export PR_NUMBER=${CIRCLE_PULL_REQUEST##*/} &&
+            yarn install --frozen-lockfile &&
+            yarn ci:deploy-review-app --verbose &&
+            node ./scripts/pr-comment.js
 
   delete_old_review_apps:
     <<: *minesweeper_env
     steps:
       - checkout
       - aws-cli/setup
-      - run: cd infra && yarn install --frozen-lockfile && yarn ci:destroy-old-review-apps
+      - run: cd infra && yarn install --frozen-lockfile
+      - run:
+          name: delete reviews apps that have not been updated in ${DELETE_REVIEW_APPS_AFTER_IN_MINUTES}
+          command: |
+            cd infra &&
+            export PR_NUMBER=${CIRCLE_PULL_REQUEST##*/} &&
+            yarn ci:destroy-old-review-apps
 
 #############
 # WORKFLOWS #

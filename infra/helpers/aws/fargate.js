@@ -13,7 +13,7 @@ class NextSiteFromLocalDockerFile extends core.Construct {
     )
     this.service.targetGroup.setAttribute(
       "deregistration_delay.timeout_seconds",
-      "60"
+      "10"
     )
   }
 }
