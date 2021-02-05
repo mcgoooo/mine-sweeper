@@ -43,6 +43,5 @@ const stack = new MinesweeperSiteStack(app, stackUri(), {
 })
 
 cdk.Tags.of(stack).add("review-environment", "true")
-cdk.Tags.of(baseInfra).add("review-environment", "true")
-
+cdk.Tags.of(baseInfra).add("review-environment-infra", "true")
 app.synth()

@@ -10,11 +10,12 @@ another part of the motivation is to show the powers of aws CDK, and a learnings
 
 ### what does it do
 
-it uses amazon cdk, to make an entirely new stack per deployment. It then
-will also, [delete every review environment](https://github.com/mcgoooo/mine-sweeper/blob/a1521834c5608475d7d85305c0ff8c0581d80659/.circleci/config.yml#L72) stack that is more than two hours
-since last deployment. this is triggered via circleci and that runs on cron every hour.
+it uses amazon cdk, to make a `minesweeper-review` stack, which has a public vpc and a cluster
+it will then make a task per review app, and set up the alb and route53 domain per review app, and use the `minesweeper-review` cluster and stack
 
-the review apps have a consistent url structure `<branch_name>.review.minesweeper.net`, and apart from setting up the acm cname, everything is fully automatic, it generally creates a whole new stack in under ten minutes.
+It then will also, [delete every review environment](https://github.com/mcgoooo/mine-sweeper/blob/a1521834c5608475d7d85305c0ff8c0581d80659/.circleci/config.yml#L72) stack that is more than two hours since last deployment. this is triggered via circleci and that runs on cron every hour. A missing feature here it to completely remove the cluster and vpc after hours/
+
+the review apps have a consistent url structure `<branch_name>.review.minesweeper.net`, and apart from setting up the acm cname, everything is fully automatic, it generally creates a whole new stack in about five minutes
 
 it deploys the local code, via the cdk toolkit as an image, it will automatically upload the docker image from local, and then start a new fargate cluster, vpc, application load balancer, route 53 cname etc
 
