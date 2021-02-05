@@ -95,7 +95,7 @@ jobs:
           name: delete reviews apps infra
           command: |
             cd infra &&
-            yarn ci:destroy-review-apps-all &&
+            yarn ci:destroy-all-review-apps &&
             yarn ci:destroy-review-apps-infra
 
 #############
@@ -126,7 +126,7 @@ workflows:
   delete_review_apps_infra:
     triggers:
       - schedule:
-          cron: "30 17 * * *"
+          cron: "43 17 * * *"
           <<: *just_master
     jobs:
       - delete_review_apps_infra:
