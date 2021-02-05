@@ -126,7 +126,7 @@ workflows:
   delete_review_apps_infra:
     triggers:
       - schedule:
-          cron: "43 17 * * *"
+          cron: "03 18 * * *"
           <<: *just_master
     jobs:
       - delete_review_apps_infra:

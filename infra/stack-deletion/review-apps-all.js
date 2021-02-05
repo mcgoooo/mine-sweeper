@@ -3,7 +3,8 @@
   const {
     deleteStack,
     FilterStacksByTags,
-  } = require("./helpers/aws/cloudformation")
+    logStacks
+  } = require("../helpers/aws/cloudformation")
 
   var cloudformation = new AWS.CloudFormation({
     region: process.env.AWS_DEFAULT_REGION,
