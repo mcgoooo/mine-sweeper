@@ -71,7 +71,7 @@ jobs:
             export PR_NUMBER=${CIRCLE_PULL_REQUEST##*/} &&
             yarn install --frozen-lockfile &&
             yarn ci:deploy-review-app --verbose &&
-            node ./scripts/pr-comment.js
+            PR_NUMBER=${CIRCLE_PULL_REQUEST##*/} node ./scripts/pr-comment.js
 
   delete_old_review_apps:
     <<: *minesweeper_env

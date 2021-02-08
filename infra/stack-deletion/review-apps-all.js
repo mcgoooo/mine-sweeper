@@ -3,7 +3,7 @@
   const {
     deleteStack,
     FilterStacksByTags,
-    logStacks
+    logStacks,
   } = require("../helpers/aws/cloudformation")
 
   var cloudformation = new AWS.CloudFormation({
