@@ -8,7 +8,7 @@ const safeBranchName = () => ENV.CIRCLE_BRANCH.replace(/[^A-Za-z0-9-\/]/g, "")
 
 const fullDomainName = () =>
   [
-    safeBranchName(),
+    "production",
     ENV.DEPLOY_ENVIRONMENT_CONTEXT,
     ENV.APP_NAME,
     ENV.DOMAIN_NAME,
