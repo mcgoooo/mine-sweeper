@@ -31,7 +31,7 @@ const options = {
   rootDomainName: ENV.DOMAIN_NAME,
   stackUri: stackUri(),
   fullDomainName: fullDomainName(),
-  dockerFile: path.resolve(__dirname, `../`),
+  dockerFile: path.resolve(__dirname, `../minesweeper-fargate/`),
 }
 
 const app = new cdk.App()

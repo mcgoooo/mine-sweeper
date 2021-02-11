@@ -47,15 +47,15 @@ jobs:
     <<: *minesweeper_env
     steps:
       - checkout
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
+      - run: cd minesweeper-fargate && yarn install --frozen-lockfile
+      - run: cd minesweeper-fargate && yarn test
 
   prettier:
     <<: *minesweeper_env
     steps:
       - checkout
-      - run: yarn install --frozen-lockfile
-      - run: yarn prettier:difference
+      - run: cd minesweeper-fargate && yarn install --frozen-lockfile
+      - run: cd minesweeper-fargate && yarn prettier:difference
 
   deploy_minesweeper_ra:
     <<: *minesweeper_env
